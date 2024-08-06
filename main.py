@@ -116,6 +116,30 @@ if selected_dataset == "Macbook Reviews":
             neg_unigram = get_top_n_grams(review_neg['cleaned_review'], 3, 20)
             plot_n_gram(neu_unigram, ["crimson"])
 
+elif selected_dataset == "Iphone Reviews":
+    visualize_df = pd.read_csv('Clean_datasets/iphone_clean.csv')
+    review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
+    review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
+    review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
+
+    ## Review Analysis Tab
+    col1, col2 = st.columns(2)
+    with col1:
+        st.header("Ratings of reviews")
+        visualize_df = visualize_df.groupby(['rating'])['rating'].count().reset_index(name='count')
+        fig = px.pie(visualize_df, values='count', names='rating', color='rating',
+                     color_discrete_map={'positive': 'skyblue',
+                                         'neutral': 'yellow',
+                                         'negative': 'crimson'})
+        st.plotly_chart(fig)
+
+    with col2:
+        st.header("Review Rating Distribution")
+        official_df = pd.read_csv('Official_datasets/Apple_Iphone_11_Reviews_new.CSV', sep=';')
+        official_df['rating'] = official_df['rating'].div(10)
+        fig = px.histogram(official_df['rating'], x="rating")
+        st.plotly_chart(fig)
+
 else:
     st.write("Loading App......")
     with st.expander('About', expanded=True):

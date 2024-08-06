@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from tpot import TPOTClassifier
 
 
-clean_reviews = pd.read_csv('Clean_datasets\mac_clean.csv')
+clean_reviews = pd.read_csv('Clean_datasets/mac_clean.csv')
 
 clean_reviews = clean_reviews.dropna()
 

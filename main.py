@@ -221,9 +221,8 @@ elif selected_dataset == "Iphone Reviews":
             plot_n_gram(neu_unigram, ["crimson"])
 
 elif selected_dataset == "Airpods Reviews":
-    visualize_df = pd.read_csv('Clean_datasets\mac_clean.csv')
+    visualize_df = pd.read_csv('Clean_datasets/airpods_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
-    review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
     review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
 
     ## Review Analysis Tab
@@ -235,12 +234,6 @@ elif selected_dataset == "Airpods Reviews":
                      color_discrete_map={'positive': 'skyblue',
                                          'neutral': 'yellow',
                                          'negative': 'crimson'})
-        st.plotly_chart(fig)
-
-    with col2:
-        st.header("Review Rating Distribution")
-        official_df = pd.read_csv('Official_datasets/Apple_Macbook_Air_M1_final.csv')
-        fig = px.histogram(official_df['rating'], x="rating")
         st.plotly_chart(fig)
 
 

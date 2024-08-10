@@ -29,7 +29,6 @@ print(f'Resampled dataset shape {Counter(y_res)}')
 
 X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, train_size=0.75, test_size=0.25, random_state=2024)
 
-# Average CV score on the training set was: 0.942145099686044
 exported_pipeline = LinearSVC(C=20.0, dual=False, loss='squared_hinge', penalty='l2', tol=0.01)
 
 exported_pipeline.fit(X_train, y_train)

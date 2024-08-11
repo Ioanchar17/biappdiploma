@@ -1,9 +1,11 @@
 import streamlit as st
+from streamlit_extras.bottom_container import bottom
 import altair as alt
 import pandas as pd
 import plotly.express as px
 
-import text_vader_model_mac
+import clean_dataframes
+import official_dataframes
 import tpot_exported_pipeline_iphone
 import tpot_exported_pipeline_macbook
 import tpot_exported_pipeline_airpods
@@ -14,6 +16,8 @@ from tpot_exported_pipeline_airpods import *
 from text_vader_model_mac import *
 from text_vader_model_iphone import *
 from text_vader_model_airpods import *
+from official_dataframes import *
+from clean_dataframes import *
 
 st.set_page_config(
     page_title="Business Intelligence App for Apple Products",
@@ -49,7 +53,7 @@ if selected_dataset == "Macbook Reviews":
 
         with col2:
             st.header("Review Rating Distribution")
-            official_df = pd.read_csv('Official_datasets/Apple_Macbook_Air_M1_final.csv')
+            official_df = official_dataframes.macbook_official_reviews
             fig = px.histogram(official_df['rating'], x="rating")
             st.plotly_chart(fig)
 
@@ -147,7 +151,7 @@ elif selected_dataset == "Iphone Reviews":
 
         with col2:
             st.header("Review Rating Distribution")
-            official_df = pd.read_csv('Official_datasets/Apple_Iphone_11_Reviews_new.CSV', sep=';')
+            official_df = official_dataframes.iphone_official_reviews
             official_df['rating'] = official_df['rating'].div(10)
             fig = px.histogram(official_df['rating'], x="rating")
             st.plotly_chart(fig)
@@ -191,19 +195,33 @@ elif selected_dataset == "Iphone Reviews":
                 st.subheader("20 Most Frequent words of Positive Reviews")
                 pos_unigram = get_top_n_grams(review_pos['cleaned_review'], 1, 20)
                 plot_n_gram(pos_unigram, ["skyblue"])
+                # ChatGPT summary of plot
+                st.write("The chart reflects the emphasis on the overall quality and specific features like the "
+                         "camera and battery in positive iPhone 11 reviews.")
             with col2:
                 st.subheader("20 Most Frequent words of Neutral Reviews")
                 neu_unigram = get_top_n_grams(review_neu['cleaned_review'], 1, 20)
                 plot_n_gram(neu_unigram, ["yellow"])
+                #ChatGPT summary of plot
+                st.write("The chart suggests that neutral reviews of the iPhone 11 often discuss aspects like "
+                         "battery, camera, and charger, along with some concerns about quality and issues like "
+                         "heating and working. The mention of words like fake and price hints at areas where users "
+                         "might have mixed feelings.")
             with col3:
                 st.subheader("20 Most Frequent words of Negative Reviews")
                 neg_unigram = get_top_n_grams(review_neg['cleaned_review'], 1, 20)
                 plot_n_gram(neu_unigram, ["crimson"])
+                # ChatGPT summary of plot
+                st.write("This chart suggests that negative reviews often focus on issues related to the battery, "
+                         "camera, and charger, along with broader concerns about quality and specific problems like "
+                         "heating and fake products. The repetition of words like issue and working underscores the "
+                         "areas where users experienced dissatisfaction.")
         elif option == "2":
             with col1:
                 st.subheader("Bigram plot of Positive Reviews")
                 pos_unigram = get_top_n_grams(review_pos['cleaned_review'], 2, 20)
                 plot_n_gram(pos_unigram, ["skyblue"])
+                # ChatGPT summary of plot
             with col2:
                 st.subheader("Bigram plot of Neutral Reviews")
                 neu_unigram = get_top_n_grams(review_neu['cleaned_review'], 2, 20)
@@ -303,14 +321,26 @@ elif selected_dataset == "Airpods Reviews":
                 plot_n_gram(neg_unigram, ["crimson"])
 
 else:
+    ## Title and apple logo
     col1, col2 = st.columns([0.95, 0.05])
-
     with col1:
         st.title("Business Intelligence App for Apple Products")
     with col2:
         st.image("images/Apple_logo_white.png", width=55)
 
-    with st.expander('About', expanded=False):
-        st.write('''
-            - :red[**LinkedIn Profile**] : https://www.linkedin.com/in/ioannis-charalampidis-4249811a9/
-            ''')
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.subheader(f'Iphone 11 Reviews: {len(official_dataframes.iphone_official_reviews)}')
+        st.image("images/pngimg.com - iphone_11_PNG38.png", width=200)
+    with col2:
+        st.subheader(f'Macbook Air M1 Reviews: {len(official_dataframes.macbook_official_reviews)}')
+        st.image("images/111883_macbookair.png", width=300)
+    with col3:
+        st.subheader(f'Airpods 2nd Gen Reviews: {len(official_dataframes.airpods_official_reviews)}')
+        st.image("images/apple-airpods.png", width=250)
+
+    with bottom():
+        with st.expander('About', expanded=False):
+            st.write('''
+                - LinkedIn Profile : https://www.linkedin.com/in/ioannis-charalampidis-4249811a9/
+                ''')

@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -7,10 +6,7 @@ from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import SMOTE
 from collections import Counter
 from sklearn.metrics import accuracy_score
-import nltk
-import string
-from nltk.stem import WordNetLemmatizer
-from nltk.corpus import stopwords
+
 
 clean_reviews = pd.read_csv('Clean_datasets\mac_clean.csv')
 

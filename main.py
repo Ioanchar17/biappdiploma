@@ -9,6 +9,7 @@ import official_dataframes
 import tpot_exported_pipeline_iphone
 import tpot_exported_pipeline_macbook
 import tpot_exported_pipeline_airpods
+import write_decisions
 from word_count_plots import *
 from tpot_exported_pipeline_macbook import *
 from tpot_exported_pipeline_iphone import *
@@ -18,6 +19,7 @@ from text_vader_model_iphone import *
 from text_vader_model_airpods import *
 from official_dataframes import *
 from clean_dataframes import *
+from write_decisions import *
 
 st.set_page_config(
     page_title="Business Intelligence App for Apple Products",
@@ -29,11 +31,11 @@ alt.themes.enable("dark")
 with st.sidebar:
     st.title('Business Intelligence App for Apple Products')
 
-    datasets_list = ['Iphone Reviews', 'Macbook Reviews', 'Airpods Reviews']
+    datasets_list = ['iPhone Reviews', 'MacBook Reviews', 'AirPods Reviews']
 
     selected_dataset = st.selectbox('Select a dataset', datasets_list, index=None)
 
-if selected_dataset == "Macbook Reviews":
+if selected_dataset == "MacBook Reviews":
     visualize_df = pd.read_csv('Clean_datasets\mac_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
@@ -131,7 +133,7 @@ if selected_dataset == "Macbook Reviews":
                 neg_unigram = get_top_n_grams(review_neg['cleaned_review'], 3, 20)
                 plot_n_gram(neu_unigram, ["crimson"])
 
-elif selected_dataset == "Iphone Reviews":
+elif selected_dataset == "iPhone Reviews":
     visualize_df = pd.read_csv('Clean_datasets/iphone_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
@@ -152,7 +154,6 @@ elif selected_dataset == "Iphone Reviews":
         with col2:
             st.header("Review Rating Distribution")
             official_df = official_dataframes.iphone_official_reviews
-            official_df['rating'] = official_df['rating'].div(10)
             fig = px.histogram(official_df['rating'], x="rating")
             st.plotly_chart(fig)
 
@@ -195,27 +196,14 @@ elif selected_dataset == "Iphone Reviews":
                 st.subheader("20 Most Frequent words of Positive Reviews")
                 pos_unigram = get_top_n_grams(review_pos['cleaned_review'], 1, 20)
                 plot_n_gram(pos_unigram, ["skyblue"])
-                # ChatGPT summary of plot
-                st.write("The chart reflects the emphasis on the overall quality and specific features like the "
-                         "camera and battery in positive iPhone 11 reviews.")
             with col2:
                 st.subheader("20 Most Frequent words of Neutral Reviews")
                 neu_unigram = get_top_n_grams(review_neu['cleaned_review'], 1, 20)
                 plot_n_gram(neu_unigram, ["yellow"])
-                #ChatGPT summary of plot
-                st.write("The chart suggests that neutral reviews of the iPhone 11 often discuss aspects like "
-                         "battery, camera, and charger, along with some concerns about quality and issues like "
-                         "heating and working. The mention of words like fake and price hints at areas where users "
-                         "might have mixed feelings.")
             with col3:
                 st.subheader("20 Most Frequent words of Negative Reviews")
                 neg_unigram = get_top_n_grams(review_neg['cleaned_review'], 1, 20)
                 plot_n_gram(neu_unigram, ["crimson"])
-                # ChatGPT summary of plot
-                st.write("This chart suggests that negative reviews often focus on issues related to the battery, "
-                         "camera, and charger, along with broader concerns about quality and specific problems like "
-                         "heating and fake products. The repetition of words like issue and working underscores the "
-                         "areas where users experienced dissatisfaction.")
         elif option == "2":
             with col1:
                 st.subheader("Bigram plot of Positive Reviews")
@@ -244,7 +232,7 @@ elif selected_dataset == "Iphone Reviews":
                 neg_unigram = get_top_n_grams(review_neg['cleaned_review'], 3, 20)
                 plot_n_gram(neu_unigram, ["crimson"])
 
-elif selected_dataset == "Airpods Reviews":
+elif selected_dataset == "AirPods Reviews":
     visualize_df = pd.read_csv('Clean_datasets/airpods_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
@@ -329,18 +317,29 @@ else:
         st.image("images/Apple_logo_white.png", width=55)
 
     col1, col2, col3 = st.columns(3)
+    # iPhone
     with col1:
-        st.subheader(f'Iphone 11 Reviews: {len(official_dataframes.iphone_official_reviews)}')
+        st.subheader(f'iPhone 11 Reviews: {len(official_dataframes.iphone_official_reviews)}')
         st.image("images/pngimg.com - iphone_11_PNG38.png", width=200)
+        if st.button("Decision for iPhone"):
+            st.write(write_decisions.stream_data(write_decisions.iphone_decision))
+    # MacBook
     with col2:
-        st.subheader(f'Macbook Air M1 Reviews: {len(official_dataframes.macbook_official_reviews)}')
+        st.subheader(f'MacBook Air M1 Reviews: {len(official_dataframes.macbook_official_reviews)}')
         st.image("images/111883_macbookair.png", width=300)
+        if st.button("Decision for MacBook"):
+            st.write(write_decisions.stream_data(write_decisions.macbook_decision))
+    # AirPods
     with col3:
-        st.subheader(f'Airpods 2nd Gen Reviews: {len(official_dataframes.airpods_official_reviews)}')
+        st.subheader(f'AirPods 2nd Gen Reviews: {len(official_dataframes.airpods_official_reviews)}')
         st.image("images/apple-airpods.png", width=250)
+        if st.button("Decision for AirPods"):
+            st.write(write_decisions.stream_data(write_decisions.airpods_decision))
 
     with bottom():
         with st.expander('About', expanded=False):
             st.write('''
                 - LinkedIn Profile : https://www.linkedin.com/in/ioannis-charalampidis-4249811a9/
                 ''')
+
+

@@ -6,3 +6,4 @@ scikit-learn~=1.5.1
 nltk~=3.8.1
 tpot~=0.12.2
 streamlit-extras
+imbalanced-learn

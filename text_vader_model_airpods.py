@@ -4,7 +4,8 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 
 nltk.download('vader_lexicon')
 
-clean_reviews_vader_airpods = pd.read_csv('Clean_datasets/airpods_clean.csv')
+clean_reviews_vader_airpods = pd.read_csv('https://github.com/Ioanchar17/biappdiploma/blob'
+                                          '/378f0955b61a238883ebdeb0d580209748ea1110/Clean_datasets/airpods_clean.csv')
 
 clean_reviews_vader_airpods = clean_reviews_vader_airpods.dropna()
 

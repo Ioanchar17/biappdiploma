@@ -8,8 +8,7 @@ from collections import Counter
 from sklearn.metrics import accuracy_score
 
 
-clean_reviews = pd.read_csv('https://github.com/Ioanchar17/biappdiploma/blob/6f4bcdb8989a6bb61d0bfb2759af4bb9031e09d8'
-                            '/Clean_datasets/mac_clean.csv')
+clean_reviews = pd.read_csv(r'Clean_datasets\mac_clean.csv')
 
 clean_reviews = clean_reviews.dropna()
 

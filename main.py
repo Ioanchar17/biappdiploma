@@ -36,7 +36,7 @@ with st.sidebar:
     selected_dataset = st.selectbox('Select a dataset', datasets_list, index=None)
 
 if selected_dataset == "MacBook Reviews":
-    visualize_df = pd.read_csv(r'Clean_datasets\mac_clean.csv')
+    visualize_df = pd.read_csv('Clean_datasets/mac_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
     review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
@@ -134,7 +134,7 @@ if selected_dataset == "MacBook Reviews":
                 plot_n_gram(neu_unigram, ["crimson"])
 
 elif selected_dataset == "iPhone Reviews":
-    visualize_df = pd.read_csv(r'Clean_datasets\iphone_clean.csv')
+    visualize_df = pd.read_csv('Clean_datasets/iphone_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neu = visualize_df[visualize_df["rating"] == 'neutral'].dropna()
     review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
@@ -233,7 +233,7 @@ elif selected_dataset == "iPhone Reviews":
                 plot_n_gram(neu_unigram, ["crimson"])
 
 elif selected_dataset == "AirPods Reviews":
-    visualize_df = pd.read_csv(r'Clean_datasets\airpods_clean.csv')
+    visualize_df = pd.read_csv('Clean_datasets/airpods_clean.csv')
     review_pos = visualize_df[visualize_df["rating"] == 'positive'].dropna()
     review_neg = visualize_df[visualize_df["rating"] == 'negative'].dropna()
 

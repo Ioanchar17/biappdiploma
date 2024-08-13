@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
-clean_reviews_airpods = pd.read_csv(r'Clean_datasets\airpods_clean.csv')
+clean_reviews_airpods = pd.read_csv('Clean_datasets/airpods_clean.csv')
 
 clean_reviews_airpods = clean_reviews_airpods.dropna()
 

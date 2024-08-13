@@ -7,7 +7,7 @@ from imblearn.over_sampling import SMOTE
 from collections import Counter
 from sklearn.metrics import accuracy_score
 
-clean_reviews_iphone = pd.read_csv(r'Clean_datasets\iphone_clean.csv')
+clean_reviews_iphone = pd.read_csv('Clean_datasets/iphone_clean.csv')
 
 clean_reviews_iphone = clean_reviews_iphone.dropna()
 

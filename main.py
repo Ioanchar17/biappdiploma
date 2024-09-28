@@ -66,7 +66,7 @@ if selected_dataset == "MacBook Reviews":
             st.subheader("My Custom Model (BernoulliNB)")
             visualize_df_sentiment = clean_reviews.groupby(['predicted_sentiment'])[
                 'predicted_sentiment'].count().reset_index(name='count')
-            visualize_df_sentiment_labels = {0: 'neutral', 1: 'negative', 2: 'positive'}
+            visualize_df_sentiment_labels = {1: 'neutral', 0: 'negative', 2: 'positive'}
             visualize_df_sentiment['predicted_sentiment'] = visualize_df_sentiment['predicted_sentiment'].map(
                 visualize_df_sentiment_labels)
             fig = px.pie(visualize_df_sentiment, values='count', names='predicted_sentiment',
